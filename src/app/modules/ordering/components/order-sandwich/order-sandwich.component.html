@@ -1,5 +1,13 @@
- <mat-form-field appearance="fill">
-    <mat-label>Enter your email</mat-label>
-    <input matInput placeholder="pat@example.com" [formControl]="email" required>
-    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+<div class="around-form">
+<form *ngIf="nameForm" [formGroup]="nameForm" (ngSubmit)="submitName()">
+<mat-form-field appearance="fill" class="order-sandwich" hideRequiredMarker="true">
+    <mat-label>Enter your name</mat-label>
+    <input matInput placeholder="Sjakie Schildpad" formControlName="name" >
+    <mat-error >Your name is required!</mat-error>
   </mat-form-field>
+  <button *ngIf="nameUnfilled" mat-raised-button color="primary" (click)="submitName()">Continue!</button>
+</form>
+  <div class="order-sandwich">
+    <p>test</p>
+  </div>
+</div>
