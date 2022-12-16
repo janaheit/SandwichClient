@@ -31,7 +31,7 @@ export class OrderService {
   }
 
   handleOrder(orderForm: OrderForm){
-    return this.http.put<Order>(this.url, orderForm);
+    return this.http.post<Order>(this.url, orderForm);
   }
 
   getTodaysBreadTypes(){
