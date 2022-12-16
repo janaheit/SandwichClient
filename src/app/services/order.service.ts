@@ -31,4 +31,17 @@ export class OrderService {
   handleOrder(orderForm: OrderForm){
     return this.http.put<Order>(this.url, orderForm);
   }
+
+  getTodaysBreadTypes(){
+    return this.http.get<BreadType>(this.url + "/shop/breadtypes")
+  }
+  getTodaysOptions(){
+    return this.http.get<BreadType>(this.url + "/shop/options")
+  }
+  getTodaysSandwiches(){
+    return this.http.get<BreadType>(this.url + "/shop/sandwiches")
+  }
+  getTodaysSandwichShop(){
+    return this.http.get<BreadType>(this.url + "/shop")
+  }
 }
