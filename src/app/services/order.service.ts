@@ -35,7 +35,7 @@ export class OrderService {
   }
 
   getTodaysBreadTypes(){
-    return this.http.get<BreadType>(this.url + "/shop/breadtypes")
+    return this.http.get<BreadType[]>(this.url + "/shop/breadtypes")
   }
   getTodaysOptions(){
     return this.http.get<Options[]>(this.url + "/shop/options")
