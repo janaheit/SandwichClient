@@ -2,8 +2,9 @@
 export class Order {
 
   orderID: number;
-  orderStatus: OrderStatus;
+  orderStatus: string;
   personID: number;
+  personName: string;
   sandwichID: number;
   sandwichName: string;
   sandwichCategory: string;

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Order} from "../../../../models/order.model";
 import {OrderService} from "../../../../services/order.service";
+import {OrderForm} from "../../../../form-models/order-form";
 
 @Component({
   selector: 'app-order-sandwich',
@@ -17,6 +18,7 @@ export class OrderSandwichComponent implements OnInit{
   wantsSandwich = false;
   myOrder: Order;
   timeForRemark = false;
+  readyToSubmit = false;
 
   constructor(private formBuilder: FormBuilder,
               private orderService: OrderService) {
@@ -49,17 +51,41 @@ export class OrderSandwichComponent implements OnInit{
   submitRemark() {
     let remark = this.remarkForm.get('remark').value;
     this.myOrder.remark = remark;
+    this.remarkUnfilled = false;
+    this.remarkForm.controls['remark'].disable();
+    this.readyToSubmit = true;
+    console.log(this.myOrder);
   }
 
   wantsSandwichHandle(yn: boolean) {
     this.wantsSandwichUnfilled = false;
-    if (yn = false) {
-      this.myOrder.orderStatus = OrderStatus.NOSANDWICH;
+    if (yn == false) {
+      //console.log("In the no sandwich run")
+      this.myOrder.orderStatus = "NOSANDWICH";
       this.timeForRemark = true;
     } else {
       this.wantsSandwich = true;
     }
-    console.log(yn);
+    //console.log(yn);
+    //console.log("Time for remark?")
+    //console.log(this.timeForRemark);
+  }
+
+  submitOrder() {
+    let myOrderDto = new OrderForm();
+    if (this.wantsSandwich == false) {
+
+      myOrderDto.noSandwich = true;
+      myOrderDto.orderId = this.myOrder.orderID;
+      myOrderDto.personFullName = this.myOrder.personName;
+    } else {
+      return;
+    }
+
+    this.orderService.handleOrder(myOrderDto).subscribe((order: Order) => {
+      console.log("All is sent, we could return what's getting back")
+    })
+
   }
 
 

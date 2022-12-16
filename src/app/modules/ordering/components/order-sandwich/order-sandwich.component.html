@@ -11,7 +11,7 @@
     <mat-label>Do you want a sandwich today? </mat-label>
     <button mat-raised-button color="primary" (click)="wantsSandwichHandle(true)" [disabled]="!wantsSandwichUnfilled">Yes</button><button mat-raised-button color="warn" (click)="wantsSandwichHandle(false)" [disabled]="!wantsSandwichUnfilled">No</button>
   </div>
-<div *ngIf="timeForRemark">
+<div *ngIf="timeForRemark" class="remark-div">
   <form *ngIf="remarkForm" [formGroup]="remarkForm" (ngSubmit)="submitRemark()">
     <mat-form-field appearance="fill" class="order-sandwich" hideRequiredMarker="true">
       <mat-label>Do you have a remark?</mat-label>
@@ -20,4 +20,7 @@
     <button *ngIf="remarkUnfilled" mat-raised-button color="primary" (click)="submitRemark()">Continue!</button>
   </form>
 </div>
+  <div *ngIf="readyToSubmit" class="remark-div">
+    <button mat-raised-button color="primary" (click)="submitOrder()">Order!</button>
+  </div>
 </div>
