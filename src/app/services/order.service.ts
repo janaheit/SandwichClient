@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Order} from "../models/order.model";
 import {environment} from "../../environments/environment";
 import {query} from "@angular/animations";
+import {OrderForm} from "../form-models/order-form";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class OrderService {
     return this.http.get<Order>(this.url + "unfilled/query", {params: queryParams});
   }
 
-  handleOrder(){
-    return null;
+  // TODO make it return the Order??
+  handleOrder(orderForm: OrderForm){
+    return this.http.put<Order>(this.url, orderForm);
   }
 }

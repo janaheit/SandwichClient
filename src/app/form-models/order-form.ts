@@ -3,5 +3,6 @@ export class OrderForm {
   personFullName: string;   // ATTENTION atm this is JanaHeitkeper / Marcelvan Hassel
   sandwichID: number;
   breadType: BreadType;
-  options:
+  options: Options[];
+  remark: string;
 }
