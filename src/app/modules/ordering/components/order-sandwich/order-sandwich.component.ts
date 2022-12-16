@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Order} from "../../../../models/order.model";
+import {OrderService} from "../../../../services/order.service";
 
 @Component({
   selector: 'app-order-sandwich',
@@ -10,8 +12,10 @@ export class OrderSandwichComponent implements OnInit{
   nameForm: FormGroup;
   nameUnfilled = true;
   wantsSandwichUnfilled = true;
+  myOrder: Order;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private orderService: OrderService) {
   }
 
   ngOnInit(): void {
@@ -21,9 +25,18 @@ export class OrderSandwichComponent implements OnInit{
   }
 
   submitName() {
-    this.nameUnfilled = false;
-    this.nameForm.controls['name'].disable();
-    console.log('send name')
+    if(this.nameForm.valid) {
+      let name = this.nameForm.get('name').value;
+      this.orderService.findTodaysUnfilledOrderByName(name).subscribe((data) =>
+      {
+        this.myOrder = data;
+      });
+    }
+    if(this.myOrder) {
+      this.nameUnfilled = false;
+      this.nameForm.controls['name'].disable();
+      console.log(this.myOrder);
+    }
   }
 
 
