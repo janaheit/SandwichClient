@@ -4,6 +4,8 @@ import {Order} from "../models/order.model";
 import {environment} from "../../environments/environment";
 import {query} from "@angular/animations";
 import {OrderForm} from "../form-models/order-form";
+import {SandwichShop} from "../models/sandwich-shop.model";
+import {Sandwich} from "../models/sandwich.model";
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +38,12 @@ export class OrderService {
     return this.http.get<BreadType>(this.url + "/shop/breadtypes")
   }
   getTodaysOptions(){
-    return this.http.get<BreadType>(this.url + "/shop/options")
+    return this.http.get<Options[]>(this.url + "/shop/options")
   }
   getTodaysSandwiches(){
-    return this.http.get<BreadType>(this.url + "/shop/sandwiches")
+    return this.http.get<Sandwich[]>(this.url + "/shop/sandwiches")
   }
   getTodaysSandwichShop(){
-    return this.http.get<BreadType>(this.url + "/shop")
+    return this.http.get<SandwichShop>(this.url + "/shop")
   }
 }
