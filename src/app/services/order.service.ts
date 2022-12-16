@@ -26,4 +26,8 @@ export class OrderService {
     queryParams = queryParams.append("name", name);
     return this.http.get<Order>(this.url + "unfilled/query", {params: queryParams});
   }
+
+  handleOrder(){
+    return null;
+  }
 }
