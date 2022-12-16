@@ -20,6 +20,45 @@
     <button *ngIf="remarkUnfilled" mat-raised-button color="primary" (click)="submitRemark()">Continue!</button>
   </form>
 </div>
+  <div *ngIf="readyToViewSandwiches" class="remark-div">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="add">
+        <th mat-header-cell *matHeaderCellDef> Choose </th>
+        <td mat-cell *matCellDef="let element; let i = index;"><button mat-mini-fab color="primary" (click)="selectSandwich(element.id, i)" [disabled]="disabledAddButton"><mat-icon>add</mat-icon></button> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef> Category </th>
+        <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+  <div *ngIf="disabledAddButton" class="remark-div">
+    <small>Select the breadtype of your choice! - </small>
+    <mat-button-toggle-group name="Bread type" [(ngModel)]="chosenBreadtype">
+      <mat-button-toggle *ngFor="let breadType of todaysBreadtypes" value="{{breadType}}">{{breadType}}</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div *ngIf="chosenBreadtype">
+    <small>Breadtype chosen! {{chosenBreadtype}}</small>
+  </div>
   <div *ngIf="readyToSubmit" class="remark-div">
     <button mat-raised-button color="primary" (click)="submitOrder()">Order!</button>
   </div>
