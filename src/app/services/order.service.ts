@@ -28,7 +28,6 @@ export class OrderService {
     return this.http.get<Order>(this.url + "unfilled/query", {params: queryParams});
   }
 
-  // TODO make it return the Order??
   handleOrder(orderForm: OrderForm){
     return this.http.put<Order>(this.url, orderForm);
   }
