@@ -9,7 +9,7 @@ import {query} from "@angular/animations";
 })
 export class OrderService {
 
-  controllerName: string = "order"
+  controllerName: string = "/order"
   url:string;
   http: HttpClient;
 
@@ -24,6 +24,6 @@ export class OrderService {
   findTodaysUnfilledOrderByName(name: string){
     let queryParams = new HttpParams();
     queryParams = queryParams.append("name", name);
-    return this.http.get<Order>(this.url + "unfilled/query", {params: queryParams});
+    return this.http.get<Order>(this.url + "/unfilled/query", {params: queryParams});
   }
 }

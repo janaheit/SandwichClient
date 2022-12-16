@@ -10,9 +10,13 @@ import {OrderService} from "../../../../services/order.service";
 })
 export class OrderSandwichComponent implements OnInit{
   nameForm: FormGroup;
+  remarkForm: FormGroup;
   nameUnfilled = true;
   wantsSandwichUnfilled = true;
+  remarkUnfilled = true;
+  wantsSandwich = false;
   myOrder: Order;
+  timeForRemark = false;
 
   constructor(private formBuilder: FormBuilder,
               private orderService: OrderService) {
@@ -22,21 +26,40 @@ export class OrderSandwichComponent implements OnInit{
     this.nameForm = this.formBuilder.group({
       name: [null, [Validators.required]]
     });
+    this.remarkForm = this.formBuilder.group({
+      remark: [null, []]
+    });
   }
 
   submitName() {
     if(this.nameForm.valid) {
       let name = this.nameForm.get('name').value;
-      this.orderService.findTodaysUnfilledOrderByName(name).subscribe((data) =>
+      this.orderService.findTodaysUnfilledOrderByName(name).subscribe((data: Order) =>
       {
-        this.myOrder = data;
+          this.myOrder = data;
       });
     }
-    if(this.myOrder) {
-      this.nameUnfilled = false;
-      this.nameForm.controls['name'].disable();
-      console.log(this.myOrder);
+      if (this.myOrder) {
+        this.nameUnfilled = false;
+        this.nameForm.controls['name'].disable();
+        console.log(this.myOrder);
+      }
+  }
+
+  submitRemark() {
+    let remark = this.remarkForm.get('remark').value;
+    this.myOrder.remark = remark;
+  }
+
+  wantsSandwichHandle(yn: boolean) {
+    this.wantsSandwichUnfilled = false;
+    if (yn = false) {
+      this.myOrder.orderStatus = OrderStatus.NOSANDWICH;
+      this.timeForRemark = true;
+    } else {
+      this.wantsSandwich = true;
     }
+    console.log(yn);
   }
 
 
