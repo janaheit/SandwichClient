@@ -121,7 +121,11 @@ export class OrderSandwichComponent implements OnInit{
 
   selectBreadtypeAndOptions() {
     this.myOrder.breadType = this.chosenBreadtype;
-    this.myOrder.options = this.chosenOptions;
+    if(this.chosenOptions) {
+      this.myOrder.options = this.chosenOptions;
+    } else {
+      this.myOrder.options = [];
+    }
     this.breadAndOptionsUnfilled = false;
     this.timeForRemark = true;
   }
