@@ -12,6 +12,12 @@ enum Options {
   NOBUTTER="Zonder boter",
 }
 
+const OptionsMapper = new Map<Options, string>([
+  [Options.RAUWKOST, 'RAUWKOST'],
+  [Options.GRILLEDVEGGIES, 'GRILLEDVEGGIES'],
+  [Options.CLUB, "CLUB"],
+  [Options.NOBUTTER, "NOBUTTER"]
+]);
 
 enum BreadType {
   GREY="grijs",

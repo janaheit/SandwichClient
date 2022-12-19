@@ -145,8 +145,9 @@ export class OrderSandwichComponent implements OnInit{
       myOrderDto.remark = this.myOrder.remark;
     }
 
+
     console.log("What we send to API:");
-    console.log(myOrderDto);
+    console.log(JSON.stringify(myOrderDto));
 
     this.orderService.handleOrder(myOrderDto).subscribe((order: Order) => {
       console.log("All is sent, we could return what's getting back")
