@@ -4,6 +4,7 @@ import {environment} from "../../environments/environment";
 import {Order} from "../models/order.model";
 import {DateIoService} from "./date-io.service";
 import {Session} from "../models/session.model";
+import {SandwichShop} from "../models/sandwich-shop.model";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,12 @@ export class ManagementService {
     this.url = environment.api.url + this.controllerName;
   }
 
-  startDay(){
-    return this.http.get(this.url + '/startup');
+  startDay(shop: SandwichShop){
+    return this.http.post(this.url + '/startup', shop);
+  }
+
+  getShops() {
+    return this.http.get<SandwichShop[]>(this.url + '/shops');
   }
 
   findAllFilledOrdersToday(){
