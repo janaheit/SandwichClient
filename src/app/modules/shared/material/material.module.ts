@@ -7,6 +7,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 
 const MaterialComponents = [
@@ -18,6 +20,8 @@ const MaterialComponents = [
   MatButtonToggleModule,
   MatOptionModule,
   MatSelectModule,
+  MatSnackBarModule,
+  MatToolbarModule,
   //others
   /*
   A11yModule,
@@ -49,10 +53,9 @@ const MaterialComponents = [
   MatSidenavModule,
   MatSliderModule,
   MatSlideToggleModule,
-  MatSnackBarModule,
   MatSortModule,
   MatTabsModule,
-  MatToolbarModule,
+
   MatTooltipModule,
   MatTreeModule,
   OverlayModule,

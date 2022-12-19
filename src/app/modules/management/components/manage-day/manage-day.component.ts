@@ -15,6 +15,7 @@ export class ManageDayComponent implements OnInit {
   entityForm: FormGroup;
   todayShop: SandwichShop;
   dayOngoing: boolean;
+  ordersClosed: boolean;
 
   constructor(
     private managementService:ManagementService,
@@ -24,6 +25,7 @@ export class ManageDayComponent implements OnInit {
 
   ngOnInit(): void {
     this.dayOngoing = false;
+    this.ordersClosed = false;
     this.managementService.getShops()
       .subscribe((shops) => {
         this.shops = shops;
@@ -65,6 +67,8 @@ export class ManageDayComponent implements OnInit {
     this.managementService.closeOrdersOfDay()
       .subscribe(()=>{
         console.log("day ended");
-      })
+      });
+    this.ordersClosed = true;
   }
+
 }

@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ManageDayComponent } from './components/manage-day/manage-day.component';
 import {ManagementRoutingModule} from "./management-routing.module";
 import {SharedModule} from "../shared/shared.module";
-import {MatOptionModule} from "@angular/material/core";
-
+import { OrderReportsComponent } from './components/order-reports/order-reports.component';
 
 
 @NgModule({
   declarations: [
-    ManageDayComponent
+    ManageDayComponent,
+    OrderReportsComponent
   ],
     imports: [
         CommonModule,

@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {SharedModule} from "./modules/shared/shared.module";
-import {OrderingModule} from "./modules/ordering/ordering.module";
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import {MatToolbarModule} from "@angular/material/toolbar";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HttpErrorInterceptor} from "./error-handling/http-error.interceptor";
 
 @NgModule({
   declarations: [
@@ -19,9 +19,14 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
-    MatToolbarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
