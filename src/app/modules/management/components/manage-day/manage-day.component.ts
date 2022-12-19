@@ -25,6 +25,13 @@ export class ManageDayComponent implements OnInit {
 
   ngOnInit(): void {
     this.dayOngoing = false;
+    // TODO error handling
+    this.orderService.getTodaysSandwichShop()
+      .subscribe((shop)=> {
+        this.todayShop = shop;
+        this.dayOngoing = true;
+      });
+
     this.ordersClosed = false;
     this.managementService.getShops()
       .subscribe((shops) => {

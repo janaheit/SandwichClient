@@ -5,6 +5,7 @@ import {Order} from "../models/order.model";
 import {DateIoService} from "./date-io.service";
 import {Session} from "../models/session.model";
 import {SandwichShop} from "../models/sandwich-shop.model";
+import {Person} from "../models/person.model";
 
 @Injectable({
   providedIn: 'root'
@@ -38,8 +39,8 @@ export class ManagementService {
     return this.http.get<Order[]>(this.url + '/today/no-sandwich');
   }
 
-  findAllMissingOrdersToday(){
-    return this.http.get<Order[]>(this.url + '/missing');
+  findPersonsThatHaveNotOrdered(){
+    return this.http.get<Person[]>(this.url + '/missing');
   }
 
   getAllClosedOrdersForDate(date: Date){

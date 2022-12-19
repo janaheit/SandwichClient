@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ManagementService} from "../../../../services/management.service";
 import {Order} from "../../../../models/order.model";
+import {Person} from "../../../../models/person.model";
 
 @Component({
   selector: 'app-order-reports',
@@ -11,16 +12,22 @@ export class OrderReportsComponent implements OnInit {
 
   dataSourceOrdered: Order[];
   dataSourceNoSandwich: Order[];
-  dataSourceMissing: Order[];
+  dataSourceMissingPersons: Person[];
 
-  displayedColumns: string[]
+  displayedColumnsOrdered: string[]
+  displayedColumnsNoSandwich: string[];
+  displayedColumnsMissingPersons: string[];
 
   constructor(
     private managementService: ManagementService,
   ){}
 
   ngOnInit(): void {
-    this.displayedColumns = ["personName", "sandwichName", "breadType", "options", "sessionName"];
+    this.displayedColumnsOrdered = ["personName", "sandwichName", "breadType", "options", "sessionName", "remark"];
+    this.displayedColumnsNoSandwich = ["personName", "sessionName", "remark"];
+    this.displayedColumnsMissingPersons = ["name"];
+
+    // TODO handle errors here => if error is thrown just don't display
     this.managementService.findAllFilledOrdersToday()
       .subscribe((orders)=> {
         this.dataSourceOrdered = orders;
@@ -31,9 +38,9 @@ export class OrderReportsComponent implements OnInit {
         this.dataSourceNoSandwich= orders;
       });
 
-    this.managementService.findAllMissingOrdersToday()
-      .subscribe((orders)=> {
-        this.dataSourceMissing = orders;
+    this.managementService.findPersonsThatHaveNotOrdered()
+      .subscribe((persons)=> {
+        this.dataSourceMissingPersons = persons;
       });
   }
 
