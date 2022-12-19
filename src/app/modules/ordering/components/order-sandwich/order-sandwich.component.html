@@ -51,7 +51,7 @@
     <small>Select the options of your choice!</small>
     <mat-button-toggle-group name="Options" [(ngModel)]="chosenOptions" multiple [disabled]="!breadAndOptionsUnfilled">
       <mat-button-toggle *ngFor="let option of todaysOptions" value="{{option}}">{{option}}</mat-button-toggle>
-    </mat-button-toggle-group>
+    </mat-button-toggle-group><br>
     <button *ngIf="breadAndOptionsUnfilled" mat-raised-button color="primary" (click)="selectBreadtypeAndOptions()">Continue!</button>
   </div>
 
