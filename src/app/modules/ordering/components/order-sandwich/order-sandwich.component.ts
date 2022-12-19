@@ -44,8 +44,6 @@ export class OrderSandwichComponent implements OnInit{
       remark: [null, []]
     });
 
-    this.retrieveBreadTypes();
-
   }
 
   retrieveAllSandwiches() {
@@ -57,7 +55,7 @@ export class OrderSandwichComponent implements OnInit{
   retrieveBreadTypes() {
     this.orderService.getTodaysBreadTypes().subscribe((data) => {
       this.todaysBreadtypes = data;
-      console.log("YEs!")
+      //console.log("YEs!")
     })
   }
 
@@ -106,8 +104,9 @@ export class OrderSandwichComponent implements OnInit{
     this.myOrder.orderStatus = "ORDERED";
     this.dataSource = [this.dataSource[sandwichIndex]];
     this.disabledAddButton = true;
+    this.retrieveBreadTypes();
     //console.log(sandwichIndex);
-    console.log(this.myOrder);
+    //console.log(this.myOrder);
   }
 
 
