@@ -11,15 +11,7 @@
     <mat-label>Do you want a sandwich today? </mat-label>
     <button mat-raised-button color="primary" (click)="wantsSandwichHandle(true)" [disabled]="!wantsSandwichUnfilled">Yes</button><button mat-raised-button color="warn" (click)="wantsSandwichHandle(false)" [disabled]="!wantsSandwichUnfilled">No</button>
   </div>
-<div *ngIf="timeForRemark" class="remark-div">
-  <form *ngIf="remarkForm" [formGroup]="remarkForm" (ngSubmit)="submitRemark()">
-    <mat-form-field appearance="fill" class="order-sandwich" hideRequiredMarker="true">
-      <mat-label>Do you have a remark?</mat-label>
-      <input matInput placeholder="Extra mayonaise for me please!" formControlName="remark" >
-    </mat-form-field>
-    <button *ngIf="remarkUnfilled" mat-raised-button color="primary" (click)="submitRemark()">Continue!</button>
-  </form>
-</div>
+
   <div *ngIf="readyToViewSandwiches" class="remark-div">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -51,14 +43,28 @@
   </div>
   <div *ngIf="disabledAddButton" class="remark-div">
     <small>Select the breadtype of your choice! - </small>
-    <mat-button-toggle-group name="Bread type" [(ngModel)]="chosenBreadtype">
+    <mat-button-toggle-group name="Bread type" [(ngModel)]="chosenBreadtype" [disabled]="!breadAndOptionsUnfilled">
       <mat-button-toggle *ngFor="let breadType of todaysBreadtypes" value="{{breadType}}">{{breadType}}</mat-button-toggle>
     </mat-button-toggle-group>
   </div>
-
-  <div *ngIf="chosenBreadtype">
-    <small>Breadtype chosen! {{chosenBreadtype}}</small>
+  <div *ngIf="chosenBreadtype" class="remark-div">
+    <small>Select the options of your choice!</small>
+    <mat-button-toggle-group name="Options" [(ngModel)]="chosenOptions" multiple [disabled]="!breadAndOptionsUnfilled">
+      <mat-button-toggle *ngFor="let option of todaysOptions" value="{{option}}">{{option}}</mat-button-toggle>
+    </mat-button-toggle-group>
+    <button *ngIf="breadAndOptionsUnfilled" mat-raised-button color="primary" (click)="selectBreadtypeAndOptions()">Continue!</button>
   </div>
+
+  <div *ngIf="timeForRemark" class="remark-div">
+    <form *ngIf="remarkForm" [formGroup]="remarkForm" (ngSubmit)="submitRemark()">
+      <mat-form-field appearance="fill" class="order-sandwich" hideRequiredMarker="true">
+        <mat-label>Do you have a remark?</mat-label>
+        <input matInput placeholder="Extra mayonaise for me please!" formControlName="remark" >
+      </mat-form-field>
+      <button *ngIf="remarkUnfilled" mat-raised-button color="primary" (click)="submitRemark()">Continue!</button>
+    </form>
+  </div>
+
   <div *ngIf="readyToSubmit" class="remark-div">
     <button mat-raised-button color="primary" (click)="submitOrder()">Order!</button>
   </div>

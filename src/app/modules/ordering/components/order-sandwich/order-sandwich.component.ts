@@ -19,6 +19,7 @@ export class OrderSandwichComponent implements OnInit{
   nameUnfilled = true;
   wantsSandwichUnfilled = true;
   remarkUnfilled = true;
+  breadAndOptionsUnfilled = true;
   wantsSandwich = false;
   myOrder: Order;
   timeForRemark = false;
@@ -26,7 +27,9 @@ export class OrderSandwichComponent implements OnInit{
   readyToViewSandwiches = false;
   disabledAddButton = false;
   todaysBreadtypes = [];
+  todaysOptions = [];
   chosenBreadtype?: string;
+  chosenOptions?: string[];
 
   //Sandwich table information
   displayedColumns: string[] = ['add', 'name', 'description', 'category'];
@@ -59,6 +62,12 @@ export class OrderSandwichComponent implements OnInit{
     })
   }
 
+  retrieveOptions() {
+    this.orderService.getTodaysOptions().subscribe((data) => {
+      this.todaysOptions = data;
+    })
+  }
+
   submitName() {
     if(this.nameForm.valid) {
       let name = this.nameForm.get('name').value;
@@ -70,7 +79,7 @@ export class OrderSandwichComponent implements OnInit{
       if (this.myOrder) {
         this.nameUnfilled = false;
         this.nameForm.controls['name'].disable();
-        console.log(this.myOrder);
+        //console.log(this.myOrder);
       }
   }
 
@@ -105,8 +114,16 @@ export class OrderSandwichComponent implements OnInit{
     this.dataSource = [this.dataSource[sandwichIndex]];
     this.disabledAddButton = true;
     this.retrieveBreadTypes();
+    this.retrieveOptions();
     //console.log(sandwichIndex);
     //console.log(this.myOrder);
+  }
+
+  selectBreadtypeAndOptions() {
+    this.myOrder.breadType = this.chosenBreadtype;
+    this.myOrder.options = this.chosenOptions;
+    this.breadAndOptionsUnfilled = false;
+    this.timeForRemark = true;
   }
 
 
@@ -119,7 +136,13 @@ export class OrderSandwichComponent implements OnInit{
       myOrderDto.personFullName = this.myOrder.personName;
       myOrderDto.remark = this.myOrder.remark;
     } else {
-      return;
+      myOrderDto.noSandwich = false;
+      myOrderDto.orderId = this.myOrder.orderID;
+      myOrderDto.personFullName = this.myOrder.personName;
+      myOrderDto.sandwichID = this.myOrder.sandwichID;
+      myOrderDto.breadType = this.myOrder.breadType;
+      myOrderDto.options = this.myOrder.options;
+      myOrderDto.remark = this.myOrder.remark;
     }
 
     console.log("What we send to API:");

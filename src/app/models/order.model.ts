@@ -8,8 +8,8 @@ export class Order {
   sandwichID: number;
   sandwichName: string;
   sandwichCategory: string;
-  breadType: BreadType;
-  options: Options[];
+  breadType: string;
+  options: string[];
   remark: string;
   sessionID: number;
   sessionName: string;
