@@ -74,13 +74,14 @@ export class OrderSandwichComponent implements OnInit{
       this.orderService.findTodaysUnfilledOrderByName(name).subscribe((data: Order) =>
       {
           this.myOrder = data;
+        if (this.myOrder) {
+          this.nameUnfilled = false;
+          this.nameForm.controls['name'].disable();
+          //console.log(this.myOrder);
+        }
       });
     }
-      if (this.myOrder) {
-        this.nameUnfilled = false;
-        this.nameForm.controls['name'].disable();
-        //console.log(this.myOrder);
-      }
+
   }
 
   submitRemark() {
