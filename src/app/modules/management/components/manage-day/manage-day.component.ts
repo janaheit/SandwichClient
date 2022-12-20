@@ -15,7 +15,6 @@ export class ManageDayComponent implements OnInit {
   entityForm: FormGroup;
   todayShop: SandwichShop;
   dayOngoing: boolean;
-  ordersClosed: boolean;
 
   constructor(
     private managementService:ManagementService,
@@ -24,15 +23,15 @@ export class ManageDayComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.dayOngoing = false;
+    this.dayOngoing = this.managementService.dayOngoing;
     // TODO error handling
     this.orderService.getTodaysSandwichShop()
       .subscribe((shop)=> {
         this.todayShop = shop;
         this.dayOngoing = true;
+        this.managementService.dayOngoing = true;
       });
 
-    this.ordersClosed = false;
     this.managementService.getShops()
       .subscribe((shops) => {
         this.shops = shops;
@@ -43,6 +42,7 @@ export class ManageDayComponent implements OnInit {
         shops: [null, Validators.required]
       }
     )
+    if (this.todayShop != null) this.entityForm.get('shops').setValue(this.todayShop.id);
   }
 
   submit(){
@@ -67,6 +67,7 @@ export class ManageDayComponent implements OnInit {
       .subscribe(()=>{
         console.log("day started");
         this.dayOngoing = true;
+        this.managementService.dayOngoing = true;
       })
   }
 
@@ -75,7 +76,8 @@ export class ManageDayComponent implements OnInit {
       .subscribe(()=>{
         console.log("day ended");
       });
-    this.ordersClosed = true;
+    this.dayOngoing = false;
+    this.managementService.dayOngoing = false;
   }
 
 }

@@ -14,6 +14,7 @@ export class ManagementService {
   controllerName: string = "/orders"
   url:string;
   http: HttpClient;
+  dayOngoing :  boolean;
 
   constructor(
     httpClient: HttpClient,
@@ -21,6 +22,7 @@ export class ManagementService {
   ) {
     this.http = httpClient;
     this.url = environment.api.url + this.controllerName;
+    this.dayOngoing=false;
   }
 
   startDay(shop: SandwichShop){

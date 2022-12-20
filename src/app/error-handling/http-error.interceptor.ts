@@ -30,8 +30,6 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             return throwError(errorMessage);
           } else {
             // server side error
-            errorMessage =  `Error Code: ${error.status}\nMessage: ${error.message}`;
-            errorMessage += `\nBody: ${error.error.title}`;
             let apiError = new ApiError();
             apiError.title = error.error.title;
             apiError.status = error.error.status;
