@@ -34,6 +34,10 @@ export class ManagementService {
     return this.http.get<SandwichShop[]>(this.url + '/shops');
   }
 
+  getTodaySandwichShop(){
+    return this.http.get<SandwichShop>(this.url + '/shop')
+  }
+
   // Gets only ordered => thus NoSandwich is not included
   findAllFilledOrdersToday(){
     return this.http.get<Order[]>(this.url + '/today');

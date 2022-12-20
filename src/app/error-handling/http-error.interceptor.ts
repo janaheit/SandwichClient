@@ -30,6 +30,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             return throwError(errorMessage);
           } else {
             // server side error
+
+            // check exceptional cases
+            //if (request.url == '')
+
+
+
             let apiError = new ApiError();
             apiError.title = error.error.title;
             apiError.status = error.error.status;

@@ -3,6 +3,7 @@ import {ManagementService} from "../../../../services/management.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SandwichShop} from "../../../../models/sandwich-shop.model";
 import {OrderService} from "../../../../services/order.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-manage-day',
@@ -18,18 +19,22 @@ export class ManageDayComponent implements OnInit {
 
   constructor(
     private managementService:ManagementService,
-    private orderService: OrderService,
     private fb: FormBuilder,
+    private router: Router,
     ) {}
 
   ngOnInit(): void {
     this.dayOngoing = this.managementService.dayOngoing;
     // TODO error handling
-    this.orderService.getTodaysSandwichShop()
-      .subscribe((shop)=> {
-        this.todayShop = shop;
-        this.dayOngoing = true;
-        this.managementService.dayOngoing = true;
+    this.managementService.getTodaySandwichShop()
+      .subscribe({
+        next: (shop) => {
+          this.todayShop = shop;
+          if(shop != null) {
+            this.dayOngoing = true;
+            this.managementService.dayOngoing = true;
+          }
+        }
       });
 
     this.managementService.getShops()
@@ -42,7 +47,7 @@ export class ManageDayComponent implements OnInit {
         shops: [null, Validators.required]
       }
     )
-    if (this.todayShop != null) this.entityForm.get('shops').setValue(this.todayShop.id);
+
   }
 
   submit(){
@@ -73,11 +78,18 @@ export class ManageDayComponent implements OnInit {
 
   endDay(){
     this.managementService.closeOrdersOfDay()
-      .subscribe(()=>{
-        console.log("day ended");
+      .subscribe({
+        next: () => {
+          this.dayOngoing = false;
+          this.todayShop = null;
+          this.managementService.dayOngoing = false;
+          this.router.navigate(['/manage/report']);
+        },
+        error: err => {
+          console.log("error occured -> nothing to handle, meaning day was not ended")
+        }
       });
-    this.dayOngoing = false;
-    this.managementService.dayOngoing = false;
+
   }
 
 }

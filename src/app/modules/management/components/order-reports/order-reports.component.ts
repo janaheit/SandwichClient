@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ManagementService} from "../../../../services/management.service";
 import {Order} from "../../../../models/order.model";
 import {Person} from "../../../../models/person.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-order-reports',
@@ -21,6 +22,7 @@ export class OrderReportsComponent implements OnInit {
 
   constructor(
     private managementService: ManagementService,
+    private snackBar: MatSnackBar,
   ){}
 
   ngOnInit(): void {
@@ -61,6 +63,7 @@ export class OrderReportsComponent implements OnInit {
     this.managementService.printOrdersToday()
       .subscribe((message) => {
         console.log(message.message);
+        this.snackBar.open("You can find your file here: " +message.message, "X");
       })
   }
 
