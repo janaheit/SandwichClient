@@ -66,6 +66,11 @@
   </div>
 
   <div *ngIf="readyToSubmit" class="remark-div">
+    <div class="remark-div">
+      <mat-form-field appearance="fill" class="order-sandwich" hideRequiredMarker="true">
+        <input matInput type="number" value="1" min="1" [(ngModel)]="chosenAmount">
+      </mat-form-field>
+    </div>
     <button mat-raised-button color="primary" (click)="submitOrder()">Order!</button>
   </div>
 </div>

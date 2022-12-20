@@ -30,6 +30,7 @@ export class OrderSandwichComponent implements OnInit{
   todaysOptions = [];
   chosenBreadtype?: string;
   chosenOptions?: string[];
+  chosenAmount: number = 1;
 
   //Sandwich table information
   displayedColumns: string[] = ['add', 'name', 'description', 'category'];
@@ -148,6 +149,7 @@ export class OrderSandwichComponent implements OnInit{
       myOrderDto.breadType = this.myOrder.breadType;
       myOrderDto.options = this.myOrder.options;
       myOrderDto.remark = this.myOrder.remark;
+      myOrderDto.amount = this.chosenAmount;
     }
 
 
