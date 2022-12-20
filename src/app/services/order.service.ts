@@ -30,6 +30,24 @@ export class OrderService {
     return this.http.get<Order>(this.url + "/unfilled/query", {params: queryParams});
   }
 
+  findTodaysFilledOrdersByName(name: string){
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("name", name);
+    return this.http.get<Order[]>(this.url + "/filled/query", {params: queryParams});
+  }
+
+  findOrdersOfLastTwoMonthsByName(name: string){
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("name", name);
+    return this.http.get<Order[]>(this.url + "/history/query", {params: queryParams});
+  }
+
+  deleteOrderById(id: number) {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("id", id);
+    return this.http.delete(this.url + "/delete/query", {params: queryParams});
+  }
+
   handleOrder(orderForm: OrderForm){
     return this.http.post<Order>(this.url, orderForm);
   }

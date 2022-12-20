@@ -5,6 +5,9 @@ import {OrderService} from "../../../../services/order.service";
 import {OrderForm} from "../../../../form-models/order-form";
 import {MatTableDataSource} from "@angular/material/table";
 import {Sandwich} from "../../../../models/sandwich.model";
+import {UserService} from "../../../../services/user.service";
+import {Router} from "@angular/router";
+import {ManagementService} from "../../../../services/management.service";
 
 const ELEMENT_DATA: Sandwich[] = [];
 
@@ -14,6 +17,7 @@ const ELEMENT_DATA: Sandwich[] = [];
   styleUrls: ['./order-sandwich.component.scss']
 })
 export class OrderSandwichComponent implements OnInit{
+  ordersOpen: boolean = false;
   nameForm: FormGroup;
   remarkForm: FormGroup;
   nameUnfilled = true;
@@ -37,16 +41,37 @@ export class OrderSandwichComponent implements OnInit{
   dataSource = ELEMENT_DATA;
 
   constructor(private formBuilder: FormBuilder,
-              private orderService: OrderService) {
+              private orderService: OrderService,
+              private userService: UserService,
+              private router: Router,
+              private managementService: ManagementService) {
   }
 
   ngOnInit(): void {
+    if(!this.managementService.dayOngoing) {
+      this.managementService.getTodaySandwichShop()
+        .subscribe({
+          next: (shop) => {
+            if (shop != null) {
+              this.managementService.dayOngoing = true;
+              this.ordersOpen = true;
+            }
+          }
+        })
+    }
     this.nameForm = this.formBuilder.group({
       name: [null, [Validators.required]]
     });
     this.remarkForm = this.formBuilder.group({
       remark: [null, []]
     });
+    this.ordersOpen = this.managementService.dayOngoing;
+    if(this.userService.getCurrentName()) {
+      //this.nameForm.controls['name'].disable();
+      this.nameForm.get('name').setValue(this.userService.getCurrentName());
+      //this.nameUnfilled = false;
+      this.submitName();
+    }
 
   }
 
@@ -71,6 +96,7 @@ export class OrderSandwichComponent implements OnInit{
 
   submitName() {
     if(this.nameForm.valid) {
+      //console.log("submitName called")
       let name = this.nameForm.get('name').value;
       this.orderService.findTodaysUnfilledOrderByName(name).subscribe((data: Order) =>
       {
@@ -78,6 +104,8 @@ export class OrderSandwichComponent implements OnInit{
         if (this.myOrder) {
           this.nameUnfilled = false;
           this.nameForm.controls['name'].disable();
+          this.nameForm.get('name').setValue(this.myOrder.personName);
+          this.userService.setCurrentName(this.myOrder.personName);
           //console.log(this.myOrder);
         }
       });
@@ -153,11 +181,12 @@ export class OrderSandwichComponent implements OnInit{
     }
 
 
-    console.log("What we send to API:");
-    console.log(JSON.stringify(myOrderDto));
+    //console.log("What we send to API:");
+    //console.log(JSON.stringify(myOrderDto));
 
     this.orderService.handleOrder(myOrderDto).subscribe((order: Order) => {
-      console.log("All is sent, we could return what's getting back")
+      //console.log("All is sent, we could return what's getting back")
+      this.router.navigateByUrl('/order/view');
     })
 
   }
