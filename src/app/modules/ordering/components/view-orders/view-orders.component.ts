@@ -15,6 +15,8 @@ export class ViewOrdersComponent implements OnInit{
   nameForm: FormGroup;
   todaysOrders: Order[];
   orderHistory: Order[];
+  showToday = false;
+  showHistory = false;
   displayedColumnsToday: string[] = ['date', 'sandwichName', 'breadType', 'options', 'remark', 'amount', 'action'];
   displayedColumnsHistory: string[] = ['date', 'sandwichName', 'breadType', 'options', 'remark', 'amount',];
 
@@ -52,7 +54,13 @@ export class ViewOrdersComponent implements OnInit{
         if(!this.personName && this.todaysOrders.length != 0) {
           this.userService.setCurrentName(this.todaysOrders[0].personName);
           this.personName = this.userService.getCurrentName();
+
           //console.log(this.myOrder);
+        }
+        if(this.todaysOrders.length != 0) {
+          this.showToday = true;
+        } else {
+          this.showToday = false;
         }
       }
     });
@@ -66,7 +74,13 @@ export class ViewOrdersComponent implements OnInit{
         if(!this.personName && this.orderHistory.length != 0) {
           this.userService.setCurrentName(this.orderHistory[0].personName);
           this.personName = this.userService.getCurrentName();
+
           //console.log(this.myOrder);
+        }
+        if(this.orderHistory.length != 0) {
+          this.showHistory = true;
+        } else {
+          this.showHistory = false;
         }
       }
     });

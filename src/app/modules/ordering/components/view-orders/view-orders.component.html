@@ -9,6 +9,7 @@
   </form>
   <div *ngIf="personName" class="remark-div">
   <h2>Hi {{personName}}!</h2>
+    <div *ngIf="showToday">
     <h3>Your orders of today:</h3>
     <table mat-table [dataSource]="todaysOrders" class="mat-elevation-z8">
 
@@ -51,6 +52,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumnsToday"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumnsToday;"></tr>
     </table>
+    </div>
+    <div *ngIf="showHistory">
     <h3>Your orders of the last two months:</h3>
     <table mat-table [dataSource]="orderHistory" class="mat-elevation-z8">
 
@@ -88,6 +91,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumnsHistory"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumnsHistory;"></tr>
     </table>
+    </div>
 
   </div>
 </div>
