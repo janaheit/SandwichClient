@@ -10,8 +10,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class HistoryComponent implements OnInit {
   dataSource: Order[];
-  startDate: Date;
-  endDate: Date;
   entityForm: FormGroup;
   display:boolean;
   displayedColumns:string[];
@@ -32,7 +30,8 @@ export class HistoryComponent implements OnInit {
   }
 
   findOrders(){
-    this.managementService.getClosedOrdersForPeriod(this.startDate, this.endDate)
+
+    this.managementService.getClosedOrdersForPeriod( new Date(this.entityForm.get('startDate').value), new Date(this.entityForm.get('endDate').value))
       .subscribe(orders =>{
         this.dataSource = orders;
         this.display = true;

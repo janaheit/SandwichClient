@@ -60,7 +60,7 @@ export class ManagementService {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("start", this.dateService.formatDate(start));
     queryParams = queryParams.append("end", this.dateService.formatDate(end));
-    return this.http.get<Order[]>(this.url + "/unfilled/query", {params: queryParams});
+    return this.http.get<Order[]>(this.url + "/period", {params: queryParams});
   }
 
   getAllSessionsDuringPeriod(start: Date, end:Date) {

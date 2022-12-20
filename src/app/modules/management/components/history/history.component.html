@@ -1,11 +1,11 @@
-<form>
+<form [formGroup]="entityForm">
   <mat-form-field>
     <mat-label>Start date</mat-label>
-    <input matInput type="date" [formControl]="$any(startDate)">
+    <input matInput type="date" formControlName="startDate">
   </mat-form-field>
   <mat-form-field>
     <mat-label>End date</mat-label>
-    <input matInput type="date" [formControl]="$any(endDate)" >
+    <input matInput type="date" formControlName="endDate" >
   </mat-form-field>
   <p>
     <button (click)="findOrders()" mat-raised-button>Find orders</button>
