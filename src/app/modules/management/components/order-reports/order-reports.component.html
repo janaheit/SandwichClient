@@ -1,6 +1,9 @@
-<div>
+<div *ngIf="dataSourceOrdered">
   <h2>Ordered Sandwiches</h2>
-  <table mat-table [dataSource]="dataSourceOrdered" class="mat-elevation-z8">
+
+  <h3 *ngIf="noOneOrdered">No one ordered a sandwich today</h3>
+
+  <table mat-table *ngIf="!noOneOrdered" [dataSource]="dataSourceOrdered" class="mat-elevation-z8">
     <ng-container matColumnDef="personName">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let element">{{element.personName}}</td>
@@ -33,7 +36,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumnsOrdered"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumnsOrdered"></tr>
   </table>
-  <button mat-raised-button *ngIf="!dayOngoing" (click)="printOrdersToday()">Print Orders</button>
+  <button mat-raised-button *ngIf="!dayOngoing && !noOneOrdered" (click)="printOrdersToday()">Print Orders</button>
 </div>
 
 <div *ngIf="dayOngoing">

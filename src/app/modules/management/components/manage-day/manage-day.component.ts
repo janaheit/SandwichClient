@@ -25,7 +25,7 @@ export class ManageDayComponent implements OnInit {
 
   ngOnInit(): void {
     this.dayOngoing = this.managementService.dayOngoing;
-    // TODO error handling
+
     this.managementService.getTodaySandwichShop()
       .subscribe({
         next: (shop) => {

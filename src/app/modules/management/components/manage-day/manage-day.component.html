@@ -1,7 +1,6 @@
 <div class="around-form">
 
   <form>
-
     <mat-form-field *ngIf="shops" appearance="fill">
       <!--<span>Select today's sandwich-shop</span>-->
       <mat-label>Sandwich-shop</mat-label>
@@ -17,7 +16,7 @@
 
   <button mat-raised-button color="primary" (click)="endDay()" [disabled]="!dayOngoing">End the day</button>
   <button routerLink="../report" mat-raised-button color="primary">See today's orders</button>
-  <button routerLink="" mat-raised-button color="primary">Go to order history (not implemented yet)</button>
+  <button routerLink="../history" mat-raised-button color="primary">Go to order history (not implemented yet)</button>
 
 </div>
 

@@ -11,6 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class OrderReportsComponent implements OnInit {
   dayOngoing: boolean;
+  noOneOrdered: boolean;
 
   dataSourceOrdered: Order[];
   dataSourceNoSandwich: Order[];
@@ -26,12 +27,11 @@ export class OrderReportsComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
+    this.noOneOrdered = false;
     this.dayOngoing = this.managementService.dayOngoing;
     this.displayedColumnsOrdered = ["personName", "sandwichName", "amount", "breadType", "options", "sessionName", "remark"];
     this.displayedColumnsNoSandwich = ["personName", "sessionName", "remark"];
     this.displayedColumnsMissingPersons = ["name"];
-
-    // TODO handle errors here => if error is thrown just don't display
 
     if (this.dayOngoing) {
       // if day is ongoing, get all orders (missing, ordered, no sandwich)
@@ -55,6 +55,7 @@ export class OrderReportsComponent implements OnInit {
       this.managementService.getAllClosedOrdersForDate(date)
         .subscribe((orders) => {
           this.dataSourceOrdered = orders;
+          this.noOneOrdered = (orders.length == 0);
         });
     }
   }
