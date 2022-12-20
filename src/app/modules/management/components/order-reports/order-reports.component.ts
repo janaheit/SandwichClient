@@ -25,7 +25,7 @@ export class OrderReportsComponent implements OnInit {
 
   ngOnInit(): void {
     this.dayOngoing = this.managementService.dayOngoing;
-    this.displayedColumnsOrdered = ["personName", "sandwichName", "breadType", "options", "sessionName", "remark"];
+    this.displayedColumnsOrdered = ["personName", "sandwichName", "amount", "breadType", "options", "sessionName", "remark"];
     this.displayedColumnsNoSandwich = ["personName", "sessionName", "remark"];
     this.displayedColumnsMissingPersons = ["name"];
 
@@ -49,8 +49,19 @@ export class OrderReportsComponent implements OnInit {
         });
     } else {
       // if the day is not ongoing, get closed orders for today
-      this.managementService.getAllClosedOrdersForDate(new Date());
+      let date = new Date();
+      this.managementService.getAllClosedOrdersForDate(date)
+        .subscribe((orders) => {
+          this.dataSourceOrdered = orders;
+        });
     }
+  }
+
+  printOrdersToday(){
+    this.managementService.printOrdersToday()
+      .subscribe((message) => {
+        console.log(message.message);
+      })
   }
 
 

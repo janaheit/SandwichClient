@@ -9,6 +9,10 @@
       <th mat-header-cell *matHeaderCellDef>Sandwich</th>
       <td mat-cell *matCellDef="let element">{{element.sandwichName}}</td>
     </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let element">{{element.amount}}</td>
+    </ng-container>
     <ng-container matColumnDef="breadType">
       <th mat-header-cell *matHeaderCellDef>Breadtype</th>
       <td mat-cell *matCellDef="let element">{{element.breadType}}</td>
@@ -29,6 +33,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumnsOrdered"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumnsOrdered"></tr>
   </table>
+  <button mat-raised-button *ngIf="!dayOngoing" (click)="printOrdersToday()">Print Orders</button>
 </div>
 
 <div *ngIf="dayOngoing">
