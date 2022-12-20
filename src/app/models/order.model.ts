@@ -16,5 +16,6 @@ export class Order {
   sandwichShopID: number;
   sandwichShopName: string;
   date: Date;
+  amount: number;
 
 }

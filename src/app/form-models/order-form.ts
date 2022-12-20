@@ -6,4 +6,5 @@ export class OrderForm {
   breadType: string;
   options: string[];
   remark: string;
+  amount: number;
 }
