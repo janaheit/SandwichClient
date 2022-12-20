@@ -48,13 +48,24 @@ export class OrderSandwichComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    if(!this.managementService.dayOngoing) {
+      this.managementService.getTodaySandwichShop()
+        .subscribe({
+          next: (shop) => {
+            if (shop != null) {
+              this.managementService.dayOngoing = true;
+              this.ordersOpen = true;
+            }
+          }
+        })
+    }
     this.nameForm = this.formBuilder.group({
       name: [null, [Validators.required]]
     });
     this.remarkForm = this.formBuilder.group({
       remark: [null, []]
     });
-    //this.ordersOpen = this.managementService.
+    this.ordersOpen = this.managementService.dayOngoing;
     if(this.userService.getCurrentName()) {
       //this.nameForm.controls['name'].disable();
       this.nameForm.get('name').setValue(this.userService.getCurrentName());
@@ -85,7 +96,7 @@ export class OrderSandwichComponent implements OnInit{
 
   submitName() {
     if(this.nameForm.valid) {
-      console.log("submitName called")
+      //console.log("submitName called")
       let name = this.nameForm.get('name').value;
       this.orderService.findTodaysUnfilledOrderByName(name).subscribe((data: Order) =>
       {

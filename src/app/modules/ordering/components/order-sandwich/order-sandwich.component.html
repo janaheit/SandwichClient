@@ -1,4 +1,9 @@
-<div class="around-form">
+<div *ngIf="!ordersOpen" class="around-form">
+  <p class="order-sandwich">
+    The orders are not open at te moment!
+  </p>
+</div>
+<div *ngIf="ordersOpen" class="around-form">
 <form *ngIf="nameForm" [formGroup]="nameForm" (ngSubmit)="submitName()">
 <mat-form-field appearance="fill" class="order-sandwich" hideRequiredMarker="true">
     <mat-label>Enter your name</mat-label>
@@ -67,7 +72,7 @@
 
   <div *ngIf="readyToSubmit" class="remark-div">
     <div class="remark-div">
-      <mat-form-field appearance="fill" class="order-sandwich" hideRequiredMarker="true">
+      <mat-form-field *ngIf="wantsSandwich" appearance="fill" class="order-sandwich" hideRequiredMarker="true">
         <input matInput type="number" value="1" min="1" [(ngModel)]="chosenAmount">
       </mat-form-field>
     </div>

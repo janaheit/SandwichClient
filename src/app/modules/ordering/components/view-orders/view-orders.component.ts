@@ -15,7 +15,8 @@ export class ViewOrdersComponent implements OnInit{
   nameForm: FormGroup;
   todaysOrders: Order[];
   orderHistory: Order[];
-  displayedColumns: string[] = ['date', 'sandwichName', 'breadType', 'options', 'remark', 'amount'];
+  displayedColumnsToday: string[] = ['date', 'sandwichName', 'breadType', 'options', 'remark', 'amount', 'action'];
+  displayedColumnsHistory: string[] = ['date', 'sandwichName', 'breadType', 'options', 'remark', 'amount',];
 
   constructor(private userService: UserService,
               private formBuilder: FormBuilder,
@@ -70,5 +71,13 @@ export class ViewOrdersComponent implements OnInit{
       }
     });
   }
+
+  deleteOrder(id: number) {
+    this.orderService.deleteOrderById(id).subscribe((data) => {
+      this.retrieveTodaysFilledOrders(this.personName);
+    });
+
+  }
+
 
 }
