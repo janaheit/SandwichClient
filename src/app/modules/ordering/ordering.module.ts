@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { OrderSandwichComponent } from './components/order-sandwich/order-sandwich.component';
 import {OrderingRoutingModule} from "./ordering-routing.module";
 import {SharedModule} from "../shared/shared.module";
+import { ViewOrdersComponent } from './components/view-orders/view-orders.component';
 
 
 
 @NgModule({
   declarations: [
-    OrderSandwichComponent
+    OrderSandwichComponent,
+    ViewOrdersComponent
   ],
   imports: [
     CommonModule,
